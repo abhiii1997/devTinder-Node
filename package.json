@@ -1,0 +1,19 @@
+{
+  "name": "devtinder-node",
+  "version": "1.0.0",
+  "description": "Mern stack App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhiii1997/devTinder-Node.git"
+  },
+  "author": "abhishek khandelwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhiii1997/devTinder-Node/issues"
+  },
+  "homepage": "https://github.com/abhiii1997/devTinder-Node#readme"
+}
