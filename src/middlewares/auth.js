@@ -1,0 +1,23 @@
+const jwt = require("jsonwebtoken")
+const User = require("../models/user")
+
+const userAuth = async (req, res, next) => {
+    try {
+        const { token } = req.cookies
+        if(!token){
+            throw new Error("token is not valid")
+        }
+        const decyptedValue = await jwt.verify(token, "devtinderNode")
+        const result = await User.findById({ _id: decyptedValue._id })
+
+        if(!result){
+            throw new Error("User Not Found")
+        }
+        req.user = result
+        next()
+    } catch (error) {
+        res.status(500).send("Error : " + error.message)
+    }
+}
+
+module.exports = userAuth
