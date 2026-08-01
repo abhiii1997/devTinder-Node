@@ -5,13 +5,19 @@ const userAuth = async (req, res, next) => {
     try {
         const { token } = req.cookies
         if(!token){
-            throw new Error("token is not valid")
+            res.status(401).send({
+            "status" : "failure",
+            "message" : "Invalid credentials!"
+        })
         }
         const decyptedValue = await jwt.verify(token, "devtinderNode")
         const result = await User.findById({ _id: decyptedValue._id })
 
         if(!result){
-            throw new Error("User Not Found")
+            res.status(401).send({
+            "status" : "failure",
+            "message" : "Invalid credentials!"
+        })
         }
         req.user = result
         next()

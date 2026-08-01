@@ -30,7 +30,7 @@ profileRouter.post("/profile/edit", userAuth, async (req, res)=> {
         const user = req.user
 
         Object.keys(req.body).forEach(ele => user[ele] = req.body[ele])
-        const updated_res = await User.findByIdAndUpdate(user._id, user)
+        const updated_res = await User.findByIdAndUpdate(user._id, user, { returnDocument: "after"})
         res.status(200).json({
             message : "data Updated successfully",
             data : updated_res

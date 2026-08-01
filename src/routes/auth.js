@@ -8,7 +8,7 @@ const User = require("../models/user")
 const authRouter = express.Router()
 
 authRouter.post("/signup", async (req, res) => {
-    const {firstName, lastName, emailId, password} = req.body
+    const {firstName, lastName, emailId, password, gender, photoUrl, about} = req.body
 
     try {
         validateSignup(req)
@@ -18,7 +18,10 @@ authRouter.post("/signup", async (req, res) => {
             firstName,
             lastName,
             emailId,
-            password: hashedPassword
+            password: hashedPassword,
+            gender,
+            photoUrl,
+            about
          })
          res.status(201).send("User Created Successfully")
     } catch (error) {
@@ -33,17 +36,24 @@ authRouter.post("/login", async (req, res) => {
     try {
         const isEmailExist = await User.findOne({emailId})
         if(!isEmailExist){
-            throw new Error("Invalid Credentials!")
+            res.status(401).send({
+            "status" : "failure",
+            "message" : "Invalid credentials!"
+        })
         }
         const isValidPassword = await isEmailExist.validatePassword(password)
          if(!isValidPassword){
-            throw new Error("Invalid Credentials!")
+            res.status(401).send({
+            "status" : "failure",
+            "message" : "Invalid credentials!"
+        })
         }
         const token = await isEmailExist.getJWT()
         res.cookie('token', token)
-        res.status(201).send({
-            "status" : true,
-            "message" : "Logged in successfully"
+        res.status(200).send({
+            "status" : "success",
+            "message" : "Logged in successfully",
+            "data" : isEmailExist
         })
     } catch (error) {
         res.status(500).send("Error : " + error.message)
