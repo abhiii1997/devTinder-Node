@@ -10,7 +10,8 @@ const userAuth = async (req, res, next) => {
             "message" : "Invalid credentials!"
         })
         }
-        const decyptedValue = await jwt.verify(token, "devtinderNode")
+        const jwtSecret = process.env.JWT_SECRET;
+        const decyptedValue = await jwt.verify(token, jwtSecret)
         const result = await User.findById({ _id: decyptedValue._id })
 
         if(!result){

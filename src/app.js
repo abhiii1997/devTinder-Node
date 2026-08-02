@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express")
 const { connectDB } = require("./config/database")
 const cookieParser = require('cookie-parser')
@@ -22,7 +23,7 @@ app.use("/", profileRouter)
 app.use("/", requestRouter)
 app.use("/", userRouter)
 
-
+const PORT = process.env.PORT
 connectDB().
     then(() => {
         console.log("Database Connection successful")
