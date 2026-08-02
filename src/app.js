@@ -9,7 +9,7 @@ const userRouter = require("./routes/user")
 const cors = require("cors")
 
 const app = new express()
-const PORT = 3000
+const PORT = process.env.PORT
 
 app.use(cors({
     origin : "http://localhost:5173",
@@ -23,7 +23,6 @@ app.use("/", profileRouter)
 app.use("/", requestRouter)
 app.use("/", userRouter)
 
-const PORT = process.env.PORT
 connectDB().
     then(() => {
         console.log("Database Connection successful")
